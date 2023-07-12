@@ -3,8 +3,32 @@
     "name": "pokedex",
     "slug": "pokedex",
     "version": "1.0.0",
+    "icon": "./assets/icon.png",
+    "splash": {
+      "image": "./assets/splash.png",
+      "resizeMode": "contain",
+      "backgroundColor": "#FFFFFF"
+    },
     "assetBundlePatterns": [
       "**/*"
-    ]
+    ],
+    "ios": {
+      "supportsTablet": true,
+      "bundleIdentifier": "com.lojaoshop.pokedex",
+      "buildNumber": "1.0.0"
+    },
+    "android": {
+      "adaptiveIcon": {
+        "foregroundImage": "./assets/adaptive-icon.png",
+        "backgroundColor": "#FFFFFF"
+      },
+      "package": "com.lojaoshop.pokedex",
+      "versionCode": 1
+    },
+    "extra": {
+      "eas": {
+        "projectId": "a126c67c-a00a-47ca-953c-c7e1c4ebf40b"
+      }
+    }
   }
 }
