@@ -9,11 +9,17 @@ export function SideMenu() {
   };
   return (
     <div
-      className='flex h-full w-full flex-row items-center justify-evenly'
+      className='flex h-full w-full flex-row items-center justify-evenly bg-blue-800'
     >
-      <MenuButton icon="home" color="#ffffff" size={60} active={currentPage === 'home'} onClick={() => handleButtonClick('home')} />
-      <MenuButton icon="pokedex" color="#ffffff" size={60} active={currentPage === 'pokedex'} onClick={() => handleButtonClick('configuration')} />
-      <MenuButton icon="pokedex2" color="#ffffff" size={60} active={currentPage === 'pokedex2'} onClick={() => handleButtonClick('graph')} />
+      <div className="w-1/3">
+        <MenuButton icon="home" color="#ffffff" size={60} active={currentPage === 'home'} onClick={() => handleButtonClick('home')} />
+      </div>
+      <div className="w-1/3">
+        <MenuButton icon="pokedex" color="#ffffff" size={60} active={currentPage === 'pokedex'} onClick={() => handleButtonClick('configuration')} />
+      </div>
+      <div className="w-1/3">
+        <MenuButton icon="pokedex2"   color="#ffffff" size={60} active={currentPage === 'pokedex2'} onClick={() => handleButtonClick('graph')} />
+      </div>
     </div>
   )
 }

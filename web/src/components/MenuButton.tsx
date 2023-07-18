@@ -30,7 +30,7 @@ export function MenuButton({
 
   return (
     <NavLink to={link}>
-      <div className="h16 w-16" onClick={onClick}>{getIconComponent(icon)}</div>
+      <div className="p-4 h16 w-full hover:font-bold hover:bg-black/25 border-t-2 border-b-2 border-transparent hover:border-b-white" onClick={onClick}>{getIconComponent(icon)}</div>
     </NavLink>
   )
 }
