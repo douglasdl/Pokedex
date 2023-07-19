@@ -140,8 +140,8 @@ export const TypeIcon = styled.Image`
 `;
 
 export const AnimatedImage = styled.Image`
-    width: 100px;
-    height: 100px;
+    width: 160px;
+    height: 160px;
 `;
 
 export const ButtonsContainer = styled.View`
@@ -152,21 +152,29 @@ export const ButtonsContainer = styled.View`
     width: 90%;
 `;
 
-export const ConfirmButton = styled.Button`
+export const ConfirmButton = styled.TouchableOpacity`
+    width: 40%;
+    height: 40px;
+    border-radius: 20px;
+    background-color: #2222FF;
     align-items: center;
     justify-content: center;
 `;
 
-export const GenerationButton = styled.Button`
-    background: green;
+export const GenerationButton = styled.TouchableOpacity`
+    background-color: green;
+    padding: 16px;
 `;
 
-export const NavigationButton = styled.Button`
+export const NavigationButton = styled.TouchableOpacity`
     width: 40%;
     height: 40px;
     border-radius: 20px;
     background: #176A9F;
     border: 0;
+    color: white;
+    align-items: center;
+    justify-content: center;
 `;
 
 export const PokemonInput = styled.TextInput`
@@ -178,4 +186,10 @@ export const PokemonInput = styled.TextInput`
     text-align: center;
     border-radius: 4px;
     margin-right: 10px;
+`;
+
+export const Title = styled.Text`
+    color: #FFF;
+    text-align: center;
+    font-weight: bold;
 `;

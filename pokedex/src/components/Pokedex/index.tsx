@@ -85,7 +85,7 @@ export function Pokedex() {
     async function fetchPokemon(pokemon: string) {
         setIsLoading(true);
 
-        console.log(pokemon);
+        console.log("Pokemon:", pokemon);
         let apiRequest = `https://pokeapi.co/api/v2/pokemon/${pokemon}`;
         const APIResponse = await fetch(apiRequest)
         .then(res => res.json())

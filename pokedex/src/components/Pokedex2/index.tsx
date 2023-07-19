@@ -21,12 +21,14 @@ import {
     ConfirmButton,
     GenerationButton,
     NavigationButton,
-    PokemonInput
+    PokemonInput,
+    Title
 } from './styles';
 
 import PokedexImg from '../../assets/Pokedex.svg';
 import BugImg from '../../assets/normal.svg';
 import { useEffect, useState } from 'react';
+import { Text } from 'react-native';
 
 interface PokemonInfoProps {
     id: number;
@@ -68,7 +70,6 @@ export function Pokedex2() {
     async function fetchPokemon(pokemon: string) {
         setIsLoading(true);
 
-        console.log(pokemon);
         let apiRequest = `https://pokeapi.co/api/v2/pokemon/${pokemon}`;
         const APIResponse = await fetch(apiRequest)
         .then(res => res.json())
@@ -200,41 +201,50 @@ export function Pokedex2() {
                 <ButtonsContainer>
 
                     <GenerationButton 
-                        title='1'
                         onPress={() => {handleGenerationSearch(1)} }
-                    />
+                    >
+                        <Title>1</Title>
+                    </GenerationButton>
                     <GenerationButton 
-                        title='2'
                         onPress={() => {handleGenerationSearch(2)} }
-                    />
+                    >
+                        <Title>2</Title>
+                    </GenerationButton>
                     <GenerationButton 
-                        title='3'
                         onPress={() => {handleGenerationSearch(3)} }
-                    />
+                    >
+                        <Title>3</Title>
+                    </GenerationButton>
                     <GenerationButton 
-                        title='4'
                         onPress={() => {handleGenerationSearch(4)} }
-                    />
+                    >
+                        <Title>4</Title>
+                    </GenerationButton>
                     <GenerationButton 
-                        title='5'
                         onPress={() => {handleGenerationSearch(5)} }
-                    />
+                    >
+                        <Title>5</Title>
+                    </GenerationButton>
                     <GenerationButton 
-                        title='6'
                         onPress={() => {handleGenerationSearch(6)} }
-                    />
+                    >
+                        <Title>6</Title>
+                    </GenerationButton>
                     <GenerationButton 
-                        title='7'
                         onPress={() => {handleGenerationSearch(7)} }
-                    />
+                    >
+                        <Title>7</Title>
+                    </GenerationButton>
                     <GenerationButton 
-                        title='8'
                         onPress={() => {handleGenerationSearch(8)} }
-                    />
+                    >
+                        <Title>8</Title>
+                    </GenerationButton>
                     <GenerationButton 
-                        title='9'
                         onPress={() => {handleGenerationSearch(9)} }
-                    />
+                    >
+                        <Title>9</Title>
+                    </GenerationButton>
                 </ButtonsContainer>
                 <Frame>
                     <Display>
@@ -271,13 +281,15 @@ export function Pokedex2() {
 
                 <ButtonsContainer>
                     <NavigationButton
-                        title="Anterior" 
                         onPress={handleSearchPreviousPokemon}
-                    />
+                    >
+                        <Title>Anterior</Title>
+                    </NavigationButton>
                     <NavigationButton 
-                        title="Próximo"
                         onPress={handleSearchNextPokemon}
-                    />            
+                    >
+                        <Title>Próximo</Title>
+                    </NavigationButton>            
                 </ButtonsContainer>
 
                 <ButtonsContainer>
@@ -287,9 +299,12 @@ export function Pokedex2() {
                         placeholder="Nome ou número do Pokemon"
                     />
                     <ConfirmButton
-                        title='CONFIRMAR'
                         onPress={handlePokemonSearch}
-                    />
+                    >
+                        <Title>
+                            CONFIRMAR
+                        </Title>
+                    </ConfirmButton>
                 </ButtonsContainer>
 
             </Cover>

@@ -6,6 +6,8 @@ import { ConfirmButton } from '../components/ConfirmButton';
 import { PokemonInput } from '../components/PokemonInput';
 import { GenerationButtons } from '../components/GenerationButtons';
 import { api } from '../lib/axios';
+import { Types } from '../components/Types';
+import { Loading } from '../components/Loading';
 
 export function Home() {
   const FIRST_POKEMON = 1
@@ -16,8 +18,8 @@ export function Home() {
   const [response, setResponse] = useState({});
   const [backgroundColor, setBackgroundColor] = useState(
     {
-      type1: `bg-water`,
-      type2: `bg-water`
+      type1: `bg-grass`,
+      type2: `bg-poison`
     }
   )
 
@@ -39,8 +41,6 @@ export function Home() {
 
   async function fetchPokemon(pokemon: string) {
     setIsLoading(true);
-  
-    console.log(pokemon);
     
     try {
       const response = await api.get(pokemon);
@@ -68,8 +68,8 @@ export function Home() {
 
       setBackgroundColor(
         {
-          type1: `bg-${result['types'][0]['type']['name']}`,
-          type2: result['types'].length > 1 ? result['types'][1]['type']['name'] : ''
+          type1: `bg-${result['types'][0]['type']['name']} top-0 w-full h-64 items-start justify-between flex-row rounded-bl-3xl rounded-br-3xl`,
+          type2: result['types'].length > 1 ? `bg-${result['types'][1]['type']['name']}` : ''
         }
       );
 
@@ -128,54 +128,33 @@ export function Home() {
   }, [])
 
   useEffect(() => {
-    console.log(backgroundColor)
+    console.log("backgroundColor:", backgroundColor)
   }, [pokemonInfo])
   
   return (
     <View className="w-full h-full p-1 bg-blue-700 justify-start">
       <View className="bg-white w-full h-full rounded-lg overflow-hidden items-center justify-start">
-        <View className={`${backgroundColor.type1} top-0 w-full h-64 items-start justify-between flex-row rounded-bl-3xl rounded-br-3xl`}>
+        <View className={backgroundColor.type1}>
           <Text className="m-2 mt-7 text-white text-2xl font-bold">{pokemonInfo.name.toUpperCase()}</Text>
           <Text className="m-2 mt-10 text-white text-base font-bold">#{pokemonInfo.id}</Text>
         </View>
           
-        <View className="mt-6 items-center justify-center bg-gray-100 h-60 w-11/12 rounded-lg">
-            <Image 
+        <View className="mt-4 items-center justify-center bg-gray-200 h-60 w-11/12 rounded-lg">
+            {isLoading ? (
+              <View className='items-center justify-center w-64 h-64 -top-44 mb-2'>
+                <Loading />
+              </View>
+            ) : (
+                <Image 
                 className="w-64 h-64 -top-44 mb-2" source={{ uri: `${pokemonInfo.image}` }} resizeMode="contain" 
-            />
+              />  
+            )}
+            
 
-          <View className="-top-48 w-4/5 p-1 items-center justify-evenly flex-row">
-            {
-              pokemonInfo.type2 === '' ? (
-                <View className={`${backgroundColor.type1} rounded-3xl`}>
-                  <Text 
-                    className={`px-4 py-1 text-white`}
-                  >
-                    {pokemonInfo.type1.toUpperCase()}
-                  </Text>
-                </View>
-              ) : (
-                <View
-                  className='flex-row'  
-                >
-                  <View className={`${backgroundColor.type1} rounded-3xl`}>
-                    <Text 
-                      className={`px-4 py-1 text-white`}
-                    >
-                      {pokemonInfo.type1.toUpperCase()}
-                    </Text>
-                  </View>
-                    <View className={`${backgroundColor.type2} rounded-3xl`}>
-                    <Text 
-                      className={`px-4 py-1 text-white`}
-                    >
-                      {pokemonInfo.type2.toUpperCase()}
-                    </Text>
-                  </View>
-                </View>
-              ) 
-            }  
-          </View>
+          <Types 
+            type1={pokemonInfo.type1}
+            type2={pokemonInfo.type2}
+          />
 
           <StatusInfo 
             pokemonInfo={pokemonInfo}
@@ -207,7 +186,7 @@ export function Home() {
           />            
         </View>
 
-        <View className="items-center justify-center flex-row mt-2 p-4">
+        <View className="items-center justify-center flex-row p-4">
           <PokemonInput
             value={searchPokemon}
             onChangeText={setSearchPokemon}

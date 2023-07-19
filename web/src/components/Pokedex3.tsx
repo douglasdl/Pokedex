@@ -62,8 +62,7 @@ export function Pokedex3() {
   async function fetchPokemon(pokemon: string) {
     setIsLoading(true);
 
-    console.log(pokemon);
-    let apiRequest = `https://pokeapi.co/api/v2/pokemon/${pokemon}`;
+    const apiRequest = `https://pokeapi.co/api/v2/pokemon/${pokemon}`;
     const APIResponse = await fetch(apiRequest)
       .then((res) => res.json())
       .then(
@@ -151,7 +150,7 @@ export function Pokedex3() {
   }
 
   function handleSearchNextPokemon() {
-    let currentPokemon = pokemonInfo.id;
+    const currentPokemon = pokemonInfo.id;
     let nextPokemon = 0;
     if (currentPokemon >= 905) {
       nextPokemon = 1;
@@ -162,7 +161,7 @@ export function Pokedex3() {
   }
 
   function handleSearchPreviousPokemon() {
-    let currentPokemon = pokemonInfo.id;
+    const currentPokemon = pokemonInfo.id;
     let previousPokemon = 0;
     if (currentPokemon <= 1) {
       previousPokemon = 905;

@@ -61,6 +61,8 @@
   },
   "include": [
     "src",
-    "vite.config.js"
+    "src/**/*.tsx",
+    "vite.config.js",
+    "tailwind.config.js"
   ]
 }

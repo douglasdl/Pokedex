@@ -11,12 +11,12 @@ export function Home() {
   const LAST_POKEMON = 1010
 
   const [isLoading, setIsLoading] = useState(false);
-  const [error, setError] = useState({} as any);
+  const [error, setError] = useState({});
   const [response, setResponse] = useState({});
   const [backgroundColor, setBackgroundColor] = useState(
     {
-      type1: `bg-water`,
-      type2: `bg-water`
+      type1: `bg-grass`,
+      type2: `bg-poison`
     }
   )
 
@@ -38,8 +38,6 @@ export function Home() {
 
   async function fetchPokemon(pokemon: string) {
     setIsLoading(true);
-  
-    console.log(pokemon);
     
     try {
       const response = await api.get(pokemon);
@@ -136,10 +134,15 @@ export function Home() {
         </div>
           
         <div className="flex mt-6 items-center justify-center bg-gray-100 h-60 w-11/12 rounded-lg flex-col">
-            <img 
-                className="w-full md:w-1/2 relative px-16 -top-48 mb-2" src={`${pokemonInfo.image}`} 
-                alt={pokemonInfo.name}
-            />
+            {!isLoading ? (
+              <div className="w-full md:w-1/2 relative px-16 -top-48 mb-2">
+              </div>
+            ) : (
+              <img 
+                  className="w-full md:w-1/2 relative px-16 -top-48 mb-2" src={`${pokemonInfo.image}`} 
+                  alt={pokemonInfo.name}
+              />
+            )}
 
             <div className="flex relative -top-52 w-full p-1 items-center justify-evenly flex-row">
               {
