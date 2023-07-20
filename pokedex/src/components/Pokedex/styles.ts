@@ -116,7 +116,7 @@ export const ButtonsContainer = styled.View`
     align-items: center;
     justify-content: space-evenly;
     flex-direction: row;
-    margin-top: 20px;
+    margin-top: 8px;
     width: 90%;
 `;
 
