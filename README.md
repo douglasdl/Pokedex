@@ -64,7 +64,7 @@ Icons
 ## 📐 Project
 
 This is a basic project that utilizes the public [RESTful Pokémon API](https://pokeapi.co/) data as backend to be displayed in the frontends web and mobile.
-Check the project online [web](https://douglasdl.github.io/NLW6-Origin/), [Android](), [iOS]().
+Check the project online [web](https://douglasdl.github.io/Pokedex/), [Android](), [iOS]().
 Pokedex is a basic page in the SPA (Single Page Application) format, responsive to be used in several devices to search and view data information from Pokemon direct from the Poke-API.
 It's coposed by the following sections: Navigation, Home, Pokedex, Details and Generations.
 
