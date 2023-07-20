@@ -14,7 +14,7 @@
 
 <br>
 <p align="center">
-    <a href="https://douglasdl.github.io/NLW6-Origin/">
+    <a href="https://douglasdl.github.io/Pokedex/">
         <img alt="Pokedex" src="https://douglasdl.github.io/images/Pokedex.png" width="100%">
     </a>
 </p>
