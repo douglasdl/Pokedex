@@ -144,8 +144,9 @@ export function Home() {
         </div>
           
         <div className="flex mt-6 items-center justify-center bg-gray-100 h-60 w-11/12 rounded-lg flex-col">
-            {!isLoading ? (
-              <div className="w-full md:w-1/2 relative px-16 -top-48 mb-2">
+            {isLoading ? (
+              <div className="w-full h-full flex-1 md:w-1/2 relative px-16 -top-48 mb-2 flex items-center justify-center bg-gray-400/50 rounded-full">
+                <span className='flex items-center justify-center w-full h-full text-5xl font-bold text-center'>Loading...</span>
               </div>
             ) : (
               <img 
