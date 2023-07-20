@@ -147,8 +147,9 @@ npm i react-router-dom
 
 Install the development dependencies:
 ```sh
-npm install -D tailwindcss postcss autoprefixer
-npm install @tailwindcss/forms
+npm i gh-pages -D
+npm i -D tailwindcss postcss autoprefixer
+npm i @tailwindcss/forms
 npx tailwindcss init
 ```
 

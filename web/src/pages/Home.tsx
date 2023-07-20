@@ -11,7 +11,6 @@ export function Home() {
   const LAST_POKEMON = 1010
 
   const [isLoading, setIsLoading] = useState(false);
-  const [error, setError] = useState({});
   const [response, setResponse] = useState({});
   const [backgroundColor, setBackgroundColor] = useState(
     {
@@ -42,13 +41,25 @@ export function Home() {
     try {
       const response = await api.get(pokemon);
       const result = response.data;
-      console.log(result)
+      //console.log(result)
   
       setIsLoading(false);
       setResponse(result);
 
       const idString = String(result.id).padStart(3, '0');
       const imageUrl = `https://assets.pokemon.com/assets/cms2/img/pokedex/full/${idString}.png`;
+
+      // id: number;
+      // name: string;
+      // image: string;
+      // hp: number;
+      // attack: number;
+      // defense: number;
+      // speed: number;
+      // specialAttack: number;
+      // specialDefense: number;
+      // type1: string;
+      // type2: string;
 
       setPokemonInfo({
         id: result.id,
@@ -73,7 +84,6 @@ export function Home() {
 
     } catch (error) {
       setIsLoading(false);
-      setError(error);
       console.log(error);
     }
   }
@@ -217,7 +227,7 @@ export function Home() {
           <div className='w-4'></div>
           <ConfirmButton
             title='CONFIRMAR'
-            onPress={handlePokemonSearch}
+            onPress={() => {handlePokemonSearch}}
           />
         </div>
 
