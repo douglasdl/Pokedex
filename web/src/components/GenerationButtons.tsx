@@ -16,7 +16,7 @@ interface IGenerationButtons {
 
 export function GenerationButtons({ generation1 = false, generation2 = false, generation3 = false, generation4 = false, generation5 = false, generation6 = false, generation7 = false, generation8 = false, generation9 = false, onPress }: IGenerationButtons) {
   return (
-    <div className="flex items-center justify-evenly flex-row mt-2 w-full">
+    <div className="flex items-center justify-center flex-row gap-2">
       {generation1 && (
         <GenerationButton 
           title='1'

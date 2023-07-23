@@ -15,10 +15,10 @@ export function SideMenu() {
         <MenuButton icon="home" color="#ffffff" size={60} active={currentPage === 'home'} onClick={() => handleButtonClick('home')} />
       </div>
       <div className="w-1/3">
-        <MenuButton icon="pokedex" color="#ffffff" size={60} active={currentPage === 'pokedex'} onClick={() => handleButtonClick('configuration')} />
+        <MenuButton icon="list" color="#ffffff" size={60} active={currentPage === 'list'} onClick={() => handleButtonClick('list')} />
       </div>
       <div className="w-1/3">
-        <MenuButton icon="pokedex2"   color="#ffffff" size={60} active={currentPage === 'pokedex2'} onClick={() => handleButtonClick('graph')} />
+        <MenuButton icon="details"   color="#ffffff" size={60} active={currentPage === 'details'} onClick={() => handleButtonClick('details')} />
       </div>
     </div>
   )

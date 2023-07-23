@@ -2,26 +2,28 @@ import React from "react";
 import { NavLink } from "react-router-dom";
 
 interface IMenuButton {
-  icon?: 'home' | 'pokedex' | 'pokedex2'
+  icon?: 'home' | 'list' | 'details'
   color: string
   size?: number
   active?: boolean
   onClick?: () => void;
+  pokemonName?: string;
 }
 
 export function MenuButton({
   icon = 'home',
   color,
+  pokemonName = 'bulbasaur',
   onClick
 }: IMenuButton) {
-  const link = icon === 'home' ? '/' : `/${icon.toLowerCase()}`
+  const link = icon === 'home' ? '/' : icon === 'details' && pokemonName ? `/details/${pokemonName}` : `/${icon.toLowerCase()}`;
 
   function getIconComponent(icon: string) {
     switch (icon) {
-      case 'pokedex':
-        return <span color={color}>POKEDEX</span>
-      case 'pokedex2':
-        return <span color={color}>POKEDEX 2</span>
+      case 'list':
+        return <span color={color}>LIST</span>
+      case 'details':
+        return <span color={color}>DETAILS</span>
       case 'home':
       default:
         return <span color={color}>HOME</span>
