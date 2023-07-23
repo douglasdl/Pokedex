@@ -5,155 +5,10 @@ import { GenerationButtons } from "@/components/GenerationButtons";
 import { ConfirmButton } from "@/components/ConfirmButton";
 import { NavigationButton } from "@/components/NavigationButton";
 import { PokemonInput } from "@/components/PokemonInput";
-
-interface IAbility {
-  ability: {
-    name: string;
-    url: string;
-  };
-  is_hidden: boolean;
-  slot: number;
-}
-
-interface IForm {
-  name: string;
-  url: string;
-}
-
-interface IVersion {
-  name: string;
-  url: string;
-}
-
-interface IGameIndex {
-  game_index: number;
-  version: IVersion;
-}
-
-interface IHeldItem {
-  item: {
-    name: string;
-    url: string;
-  };
-  version_details: {
-    rarity: number;
-    version: {
-      name: string;
-      url: string;
-    };
-  }[];
-}
-
-interface IMove {
-  move: {
-    name: string;
-    url: string;
-  };
-  version_group_details: {
-    level_learned_at: number;
-    move_learn_method: {
-      name: string;
-      url: string;
-    };
-    version_group: {
-      name: string;
-      url: string;
-    };
-  }[];
-}
-
-interface ISpecies {
-  name: string;
-  url: string;
-}
-
-interface IVersions {
-  [generation: string]: {
-    [version: string]: {
-      front_default: string | null;
-      front_female: string | null;
-      front_shiny: string | null;
-      front_shiny_female: string | null;
-      back_default: string | null;
-      back_female: string | null;
-      back_shiny: string | null;
-      back_shiny_female: string | null;
-    };
-  };
-}
-
-interface ISprites {
-  back_default: string | null;
-  back_female: string | null;
-  back_shiny: string | null;
-  back_shiny_female: string | null;
-  front_default: string | null;
-  front_female: string | null;
-  front_shiny: string | null;
-  front_shiny_female: string | null;
-  other: {
-    dream_world: {
-      front_default: string | null;
-      front_female: string | null;
-    };
-    home: {
-      front_default: string | null;
-      front_female: string | null;
-      front_shiny: string | null;
-      front_shiny_female: string | null;
-    };
-    "official-artwork": {
-      front_default: string | null;
-      front_shiny: string | null;
-    };
-  };
-  versions: {
-    [key: string]: IVersions;
-  };
-}
-
-interface IStat {
-  base_stat: number;
-  effort: number;
-  stat: {
-    name: string;
-    url: string;
-  };
-}
-
-interface IType {
-  slot: number;
-  type: {
-    name: string;
-    url: string;
-  };
-}
-
-interface IPokemonDetails {
-  abilities: IAbility[];
-  base_experience: number;
-  forms: IForm[]; 
-  game_indices: IGameIndex[];
-  height: number;
-  held_items: IHeldItem[];
-  id: number;
-  is_default: boolean;
-  location_area_encounters: string;
-  moves: IMove[];
-  name: string;
-  order: number;
-  past_types: string[];
-  species: ISpecies;
-  sprites: ISprites;
-  stats: IStat[];
-  types: IType[];
-  weight: number;
-}
+import { FIRST_POKEMON, LAST_POKEMON, IPokemonDetails } from "@/utils/interfaces";
 
 export function PokemonDetails() {
-  const FIRST_POKEMON = 1
-  const LAST_POKEMON = 1010
-  
+  const [isLoading, setIsLoading] = useState(false);
   const { name: pokemonName } = useParams<{ name: string }>();
   const [pokemonDetails, setPokemonDetails] = useState<IPokemonDetails | null>(null);
   const [searchPokemon, setSearchPokemon] = useState('');
@@ -161,6 +16,7 @@ export function PokemonDetails() {
   async function fetchPokemonDetails(pokemon: string) {
     try {
       const result = await api.get<IPokemonDetails>(pokemon);
+      setIsLoading(false);
       setPokemonDetails(result.data);
     } catch (error) {
       console.error("Error fetching Pokemon details:", error);
@@ -175,11 +31,11 @@ export function PokemonDetails() {
     return <div>Loading...</div>;
   }
 
-  const { name, abilities, base_experience, forms, height, held_items, id, moves, sprites, stats, weight } = pokemonDetails;
+  const { name, abilities, base_experience, forms, height, held_items, id, moves, sprites, stats, weight, types } = pokemonDetails;
 
   const capitalizedPokemonName = name.charAt(0).toUpperCase() + name.slice(1);
 
-  async function handleSearchNextPokemon() {
+  function handleSearchNextPokemon() {
     const currentPokemon = id;
     let nextPokemon = 0;
     if(currentPokemon >= LAST_POKEMON) {
@@ -187,21 +43,33 @@ export function PokemonDetails() {
     } else {
         nextPokemon = currentPokemon + 1;
     }
-    await fetchPokemonDetails(nextPokemon.toString());
+    fetchPokemonDetails(nextPokemon.toString())
+    .then(() => {
+      //
+    })
+    .catch((error) => {
+      console.error("Error fetching Pokemon details:", error);
+    })
   }
 
-  async function handleSearchPreviousPokemon() {
+  function handleSearchPreviousPokemon() {
     const currentPokemon = id;
     let previousPokemon = 0;
     if(currentPokemon <= FIRST_POKEMON) {
-        previousPokemon = LAST_POKEMON;
+      previousPokemon = LAST_POKEMON;
     } else {
-        previousPokemon = currentPokemon - 1;
+      previousPokemon = currentPokemon - 1;
     }
-    await fetchPokemonDetails(previousPokemon.toString());
+    fetchPokemonDetails(previousPokemon.toString())
+    .then(() => {
+      //
+    })
+    .catch((error) => {
+      console.error("Error fetching Pokemon details:", error);
+    })
   }
 
-  async function handleGenerationSearch(generation: number) {
+  function handleGenerationSearch(generation: number) {
     const generationInitial = [
       ['zero', 0],      // ---
       ['first', 1],     // 151  Kanto 
@@ -214,19 +82,45 @@ export function PokemonDetails() {
       ['eightth', 810], // 905  Galar
       ['nineth', 906]   // 1010 Paldea
     ]
-    await fetchPokemonDetails(generationInitial[generation][1].toString());
+    fetchPokemonDetails(generationInitial[generation][1].toString())
+    .then(() => {
+      //
+    })
+    .catch((error) => {
+      console.error("Error fetching Pokemon details:", error);
+    })
   }
 
-  async function handlePokemonSearch() {
+  function handlePokemonSearch() {
     if(searchPokemon === '') return
-    await fetchPokemonDetails(searchPokemon.toLowerCase());
+    
+    fetchPokemonDetails(searchPokemon.toLowerCase())
+    .then(() => {
+      //
+    })
+    .catch((error) => {
+      console.error("Error fetching Pokemon details:", error);
+    })
   }
 
   return (
     <div className="flex items-center justify-center h-full flex-col gap-1 p-1">
       <h1 className="text-yellow-500 text-3xl p-2"># {id} - {capitalizedPokemonName}</h1>
-      <div className="flex items-center justify-center flex-row gap-4 w-full">
-        <div className="flex items-center justify-center flex-row w-1/2 gap-2 border border-gray-700 p-2 rounded-md">
+      <div className="flex items-center justify-center gap-4">
+        {types.map((type) => {
+          const bgColor = `bg-${type.type.name}`
+          return (
+          <span
+            key={type.slot}
+            className={`flex items-center justify-center px-4 py-2 w-20 border border-white rounded-full ${bgColor}`}
+          >
+            {type.type.name}
+          </span>
+        )})}
+      </div>
+      <div className="flex items-center justify-center flex-col md:flex-row gap-4 w-full">
+        
+        <div className="flex items-center justify-center flex-row md:w-1/2 gap-2 border border-gray-700 p-2 rounded-md w-full">
           <NavigationButton
             title="⇦ Prev" 
             onPress={handleSearchPreviousPokemon}
@@ -236,6 +130,7 @@ export function PokemonDetails() {
             onPress={handleSearchNextPokemon}
           />            
         </div>
+
         <div className="flex items-center justify-center flex-row gap-2 w-full border border-gray-700 p-2 rounded-md">
           <span>Gen.</span>
           <GenerationButtons
@@ -251,20 +146,23 @@ export function PokemonDetails() {
             onPress={handleGenerationSearch}
           />
         </div>
+
         <div className="flex items-center justify-center flex-row w-full border border-gray-700 p-2 rounded-md">
           <PokemonInput
             value={searchPokemon}
             onChangeText={setSearchPokemon}
-            placeholder="Nome ou número do Pokemon"
+            placeholder="Pokemon name or number"
             placeholderTextColor="gray"
           />
           <div className='w-4'></div>
           <ConfirmButton
             title='CONFIRMAR'
-            onPress={() => {handlePokemonSearch}}
+            onPress={() => {handlePokemonSearch()}}
           />
         </div>
+
       </div>
+
       <div className="flex items-center justify-evenly flex-row w-full border border-gray-700 p-2">
         <div className="flex-wrap flex gap-2">
           {sprites.other.dream_world.front_default ? (<img className="w-24" src={sprites.other.dream_world.front_default} alt={name} />) : (<></>)}

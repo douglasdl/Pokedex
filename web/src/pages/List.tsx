@@ -68,14 +68,16 @@ export function List() {
           {`Next ${itemsPerPage}`}
         </button>
       </div>
-      <ul className="flex w-full flex-wrap gap-2 mx-auto items-center justify-center">
+      <ul className="flex w-full flex-wrap gap-2 p-2 md:p-0 mx-auto items-center justify-center">
         {pokemons.map((pokemon) => (
-          <li key={pokemon.name} className="w-1/5">
+          <li key={pokemon.name} className="w-full md:w-1/5">
             <Link 
               to={`/details/${pokemon.name}`} 
-              className="flex p-2  border border-gray-600 rounded-lg"
+              className="flex p-2 border border-gray-600 rounded-lg"
             >
-              {capitalizeName(pokemon.name)}
+              <span className="text-3xl md:text-base text-center md:text-left w-full">
+                {capitalizeName(pokemon.name)}
+              </span>
             </Link>
         </li>
         ))}

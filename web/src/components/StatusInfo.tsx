@@ -2,17 +2,12 @@ import React from "react";
 import { IStatisticsItem, StatisticsItem } from "./StatisticsItem"
 
 export interface PokemonInfoProps {
-    id: number;
-    name: string;
-    image: string;
     hp: number;
     attack: number;
     defense: number;
     speed: number;
     specialAttack: number;
     specialDefense: number;
-    type1: string;
-    type2: string;
 }
 
 interface IStatusInfo {
@@ -47,7 +42,7 @@ export function StatusInfo({pokemonInfo}: IStatusInfo) {
         },
     ]
     return (
-        <div className="-mt-52 items-end justify-center flex-col ml-1">
+        <div className="-mt-56 items-end justify-center flex-col ml-1">
             {
                 statusInfoItems.map(item => {
                     return (

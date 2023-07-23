@@ -5,92 +5,83 @@ import { ConfirmButton } from '@/components/ConfirmButton';
 import { PokemonInput } from '@/components/PokemonInput';
 import { GenerationButtons } from '@/components/GenerationButtons';
 import { api } from '@/libs/axios';
+import { FIRST_POKEMON, LAST_POKEMON, IPokemonDetails } from '@/utils/interfaces';
 
 export function Home() {
-  const FIRST_POKEMON = 1
-  const LAST_POKEMON = 1010
-
   const [isLoading, setIsLoading] = useState(false);
-  const [response, setResponse] = useState({});
-  const [backgroundColor, setBackgroundColor] = useState(
-    {
-      type1: `bg-grass`,
-      type2: `bg-poison`
-    }
-  )
-
+  const [pokemonName, setPokemonName] = useState<string>("bulbasaur");
+  const [pokemonDetails, setPokemonDetails] = useState<IPokemonDetails | null>(null);
   const [searchPokemon, setSearchPokemon] = useState('');
 
   const [pokemonInfo, setPokemonInfo] = useState<PokemonInfoProps>({
-    id: 1,
-    name: 'bulbasaur',
-    image: 'https://assets.pokemon.com/assets/cms2/img/pokedex/full/001.png',
     hp: 45,
     attack: 62,
     defense: 63,
     speed: 60,
     specialAttack: 80,
-    specialDefense: 80,
-    type1: 'grass',
-    type2: 'poison',
+    specialDefense: 80
   });
 
-  async function fetchPokemon(pokemon: string) {
-    setIsLoading(true);
-    
+  async function fetchPokemonDetails(pokemon: string) {
     try {
-      const response = await api.get(pokemon);
-      const result = response.data;
-      //console.log(result)
-  
+      const result = await api.get<IPokemonDetails>(pokemon);
       setIsLoading(false);
-      setResponse(result);
-
-      const idString = String(result.id).padStart(3, '0');
-      const imageUrl = `https://assets.pokemon.com/assets/cms2/img/pokedex/full/${idString}.png`;
-
-      // id: number;
-      // name: string;
-      // image: string;
-      // hp: number;
-      // attack: number;
-      // defense: number;
-      // speed: number;
-      // specialAttack: number;
-      // specialDefense: number;
-      // type1: string;
-      // type2: string;
-
+      setPokemonDetails(result.data);
       setPokemonInfo({
-        id: result.id,
-        name: result.name,
-        image: imageUrl,
-        hp: result['stats'][0]['base_stat'],
-        attack: result['stats'][1]['base_stat'],
-        defense: result['stats'][2]['base_stat'],
-        speed: result['stats'][5]['base_stat'],
-        specialAttack: result['stats'][3]['base_stat'],
-        specialDefense: result['stats'][4]['base_stat'],
-        type1: result['types'][0]['type']['name'],
-        type2: result['types'].length > 1 ? result['types'][1]['type']['name'] : '',
-      });
-
-      setBackgroundColor(
-        {
-          type1: `bg-${result['types'][0]['type']['name']}`,
-          type2: result['types'].length > 1 ? result['types'][1]['type']['name'] : ''
-        }
-      );
-
+        hp: result.data.stats[0].base_stat,
+        attack: result.data.stats[1].base_stat,
+        defense: result.data.stats[2].base_stat,
+        specialAttack: result.data.stats[3].base_stat,
+        specialDefense:result.data.stats[4].base_stat,
+        speed:result.data.stats[1].base_stat 
+      })
     } catch (error) {
-      setIsLoading(false);
-      console.log(error);
+      console.error("Error fetching Pokemon details:", error);
     }
   }
   
-  async function handlePokemonSearch() {
-    if(searchPokemon === '') return
-    await fetchPokemon(searchPokemon.toLowerCase());
+  useEffect(() => {
+    void fetchPokemonDetails(`/${pokemonName ?? ""}`);
+  }, [pokemonName]);
+
+  if (!pokemonDetails) {
+    return <div>Loading...</div>;
+  }
+
+  const { name, id, sprites, types } = pokemonDetails;
+
+  function handleSearchNextPokemon() {
+    const currentPokemon = id;
+    let nextPokemon = 0;
+    if(currentPokemon >= LAST_POKEMON) {
+        nextPokemon = FIRST_POKEMON;
+    } else {
+        nextPokemon = currentPokemon + 1;
+    }
+    fetchPokemonDetails(nextPokemon.toString())
+    .then(() => {
+      //
+    })
+    .catch((error) => {
+      console.error("Error fetching Pokemon details:", error);
+    })
+  }
+
+  function handleSearchPreviousPokemon() {
+    const currentPokemon = id;
+    let previousPokemon = 0;
+    if(currentPokemon <= FIRST_POKEMON) {
+      previousPokemon = LAST_POKEMON;
+    } else {
+      previousPokemon = currentPokemon - 1;
+    }
+    fetchPokemonDetails(previousPokemon.toString())
+    .then(() => {
+      //
+    })
+    .catch((error) => {
+      console.error("Error fetching Pokemon details:", error);
+    })
   }
 
   function handleGenerationSearch(generation: number) {
@@ -106,87 +97,62 @@ export function Home() {
       ['eightth', 810], // 905  Galar
       ['nineth', 906]   // 1010 Paldea
     ]
-    fetchPokemon(generationInitial[generation][1].toString());
+    fetchPokemonDetails(generationInitial[generation][1].toString())
+    .then(() => {
+      //
+    })
+    .catch((error) => {
+      console.error("Error fetching Pokemon details:", error);
+    })
   }
 
-  function handleSearchNextPokemon() {
-    const currentPokemon = pokemonInfo.id;
-    let nextPokemon = 0;
-    if(currentPokemon >= LAST_POKEMON) {
-        nextPokemon = FIRST_POKEMON;
-    } else {
-        nextPokemon = currentPokemon + 1;
-    }
-    fetchPokemon(nextPokemon.toString());
+  function handlePokemonSearch() {
+    if(searchPokemon === '') return
+    
+    fetchPokemonDetails(searchPokemon.toLowerCase())
+    .then(() => {
+      //
+    })
+    .catch((error) => {
+      console.error("Error fetching Pokemon details:", error);
+    })
   }
-
-  function handleSearchPreviousPokemon() {
-    const currentPokemon = pokemonInfo.id;
-    let previousPokemon = 0;
-    if(currentPokemon <= FIRST_POKEMON) {
-        previousPokemon = LAST_POKEMON;
-    } else {
-        previousPokemon = currentPokemon - 1;
-    }
-    fetchPokemon(previousPokemon.toString());
-  }
-
-  useEffect(() => {
-    fetchPokemon('1');
-  }, [])
   
   return (
     <div className="flex w-full h-full p-1 bg-blue-700 justify-start">
       <div className="flex bg-white w-full h-full rounded-lg overflow-hidden items-center justify-start flex-col">
-        <div className={`${backgroundColor.type1} top-0 w-full h-64 items-start justify-between flex-row rounded-bl-3xl rounded-br-3xl flex`}>
-          <span className="m-2 mt-7 text-white text-2xl font-bold">{pokemonInfo.name.toUpperCase()}</span>
-          <span className="m-2 mt-10 text-white text-base font-bold">#{pokemonInfo.id}</span>
+        <div className={`bg-${types[0].type.name} top-0 w-full h-64 items-start justify-between flex-row rounded-bl-3xl rounded-br-3xl flex`}>
+          <span className="m-2 mt-7 text-white text-2xl font-bold">{name.toUpperCase()}</span>
+          <span className="m-2 mt-10 text-white text-base font-bold">#{id}</span>
         </div>
           
         <div className="flex mt-6 items-center justify-center bg-gray-100 h-60 w-11/12 rounded-lg flex-col">
-            {isLoading ? (
-              <div className="w-full h-full flex-1 md:w-1/2 relative px-16 -top-48 mb-2 flex items-center justify-center bg-gray-400/50 rounded-full">
-                <span className='flex items-center justify-center w-full h-full text-5xl font-bold text-center'>Loading...</span>
-              </div>
-            ) : (
-              <img 
-                  className="w-full md:w-1/2 relative px-16 -top-48 mb-2" src={`${pokemonInfo.image}`} 
-                  alt={pokemonInfo.name}
-              />
-            )}
-
-            <div className="flex relative -top-52 w-full p-1 items-center justify-evenly flex-row">
-              {
-                pokemonInfo.type2 === '' ? (
-                  <div className={`${backgroundColor.type1} rounded-3xl`}>
-                    <span 
-                      className={`px-4 py-1 text-white`}
-                    >
-                      {pokemonInfo.type1.toUpperCase()}
-                    </span>
-                  </div>
-                ) : (
-                  <div
-                    className='flex flex-row'  
-                  >
-                    <div className={`${backgroundColor.type1} rounded-3xl`}>
-                      <span 
-                        className={`px-4 py-1 text-white`}
-                      >
-                        {pokemonInfo.type1.toUpperCase()}
-                      </span>
-                    </div>
-                      <div className={`${backgroundColor.type2} rounded-3xl`}>
-                      <span 
-                        className={`px-4 py-1 text-white`}
-                      >
-                        {pokemonInfo.type2.toUpperCase()}
-                      </span>
-                    </div>
-                  </div>
-                ) 
-              }  
+          {isLoading ? (
+            <div className="w-full h-full flex-1 md:w-1/2 relative px-16 -top-48 mb-2 flex items-center justify-center bg-gray-400/50 rounded-full">
+              <span className='flex items-center justify-center w-full h-full text-5xl font-bold text-center'>Loading...</span>
             </div>
+          ) : (
+            <img 
+              className="h-full md:h-5/6 relative px-16 -top-60 mb-2" 
+              src={sprites.other.dream_world.front_default ? sprites.other.dream_world.front_default : ""}
+              alt={name}
+            />
+          )}
+
+          <div className="flex relative -top-60 w-full p-1 items-center justify-center flex-row gap-4">
+              
+            {types.map((type) => {
+              const bgColor = `bg-${type.type.name}`
+              return (
+              <span
+                key={type.slot}
+                className={`flex items-center justify-center px-4 py-1 w-20 text-white rounded-full ${bgColor}`}
+              >
+                {type.type.name.toUpperCase()}
+              </span>
+            )})}
+              
+          </div>
 
           <StatusInfo 
             pokemonInfo={pokemonInfo}
@@ -194,18 +160,20 @@ export function Home() {
           />
         </div>
 
-        <GenerationButtons 
-          generation1
-          generation2
-          generation3
-          generation4
-          generation5
-          generation6
-          generation7
-          generation8
-          generation9
-          onPress={handleGenerationSearch}
-        />
+        <div className='mt-2'>
+          <GenerationButtons 
+            generation1
+            generation2
+            generation3
+            generation4
+            generation5
+            generation6
+            generation7
+            generation8
+            generation9
+            onPress={handleGenerationSearch}
+          />
+        </div>
 
         <div className="flex items-center justify-evenly flex-row mt-2 w-full">
           <NavigationButton
@@ -228,7 +196,7 @@ export function Home() {
           <div className='w-4'></div>
           <ConfirmButton
             title='CONFIRMAR'
-            onPress={() => {handlePokemonSearch}}
+            onPress={() => {handlePokemonSearch()}}
           />
         </div>
 
