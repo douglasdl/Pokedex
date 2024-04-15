@@ -43,7 +43,7 @@
         "src/libs/*"
       ],
       "pages/*": [
-        "src/pages/*"
+        "src/app/*"
       ],
       "routes/*": [
         "src/routes/*"

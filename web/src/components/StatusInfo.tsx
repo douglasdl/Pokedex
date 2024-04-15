@@ -1,17 +1,8 @@
 import React from "react";
 import { IStatisticsItem, StatisticsItem } from "./StatisticsItem"
 
-export interface PokemonInfoProps {
-    hp: number;
-    attack: number;
-    defense: number;
-    speed: number;
-    specialAttack: number;
-    specialDefense: number;
-}
-
 interface IStatusInfo {
-    pokemonInfo: PokemonInfoProps
+    pokemonInfo: PokemonInfoDTO
 }
 
 export function StatusInfo({pokemonInfo}: IStatusInfo) {

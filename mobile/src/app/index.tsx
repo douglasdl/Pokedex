@@ -1,27 +1,26 @@
-import React, { useEffect, useState } from 'react';
+import { useEffect, useState } from 'react';
 import { Image, Text, View } from 'react-native';
-import { StatusInfo } from '../components/StatusInfo';
-import { NavigationButton } from '../components/NavigationButton';
-import { ConfirmButton } from '../components/ConfirmButton';
-import { PokemonInput } from '../components/PokemonInput';
-import { GenerationButtons } from '../components/GenerationButtons';
-import { api } from '../lib/axios';
-import { Types } from '../components/Types';
-import { Loading } from '../components/Loading';
+import { StatusInfo } from '@/components/StatusInfo';
+import { NavigationButton } from '@/components/NavigationButton';
+import { ConfirmButton } from '@/components/ConfirmButton';
+import { PokemonInput } from '@/components/PokemonInput';
+import { GenerationButtons } from '@/components/GenerationButtons';
+import { api } from '@/lib/axios';
+import { Types } from '@/components/Types';
+import { Loading } from '@/components/Loading';
+import { PokemonInfoDTO } from '@/DTOs/PokemonInfoDTO';
 
-export function Home() {
+export default function Home() {
   const FIRST_POKEMON = 1
   const LAST_POKEMON = 1025
 
   const [isLoading, setIsLoading] = useState(false);
   const [error, setError] = useState({} as any);
   const [response, setResponse] = useState({});
-  const [backgroundColor, setBackgroundColor] = useState(
-    {
-      type1: `bg-grass`,
-      type2: `bg-poison`
-    }
-  )
+  const [backgroundColor, setBackgroundColor] = useState({
+    type1: `bg-bug`,
+    type2: `bg-fire`
+  })
 
   const [searchPokemon, setSearchPokemon] = useState('');
 
@@ -35,8 +34,8 @@ export function Home() {
     speed: 60,
     specialAttack: 80,
     specialDefense: 80,
-    type1: 'grass',
-    type2: 'poison',
+    type1: 'bug',
+    type2: 'fairy',
   });
 
   async function fetchPokemon(pokemon: string) {
@@ -76,7 +75,7 @@ export function Home() {
     } catch (error) {
       setIsLoading(false);
       setError(error);
-      console.log(error);
+      console.error(error);
     }
   }
   
@@ -96,7 +95,7 @@ export function Home() {
       ['sixth', 650],   // 721  Kalos
       ['seventh', 722], // 809  Alola
       ['eightth', 810], // 905  Galar
-      ['nineth', 906]   // 1010 Paldea
+      ['nineth', 906]   // 1025 Paldea
     ]
     fetchPokemon(generationInitial[generation][1].toString());
   }
@@ -128,7 +127,7 @@ export function Home() {
   }, [])
 
   useEffect(() => {
-    console.log("backgroundColor:", backgroundColor)
+    //console.log("backgroundColor:", backgroundColor)
   }, [pokemonInfo])
   
   return (
@@ -161,6 +160,7 @@ export function Home() {
             key={1}
           />
         </View>
+        
 
         <GenerationButtons 
           generation1

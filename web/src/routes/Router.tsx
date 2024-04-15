@@ -1,9 +1,9 @@
 import React from 'react';
 import { Route, Routes } from 'react-router-dom'
 import { DefaultLayout } from '@/layouts/DefaultLayout'
-import { Home } from '@/pages/Home'
-import { List } from '@/pages/List'
-import { PokemonDetails } from '@/pages/PokemonDetails'
+import { Home } from '@/app/Home'
+import { List } from '@/app/List'
+import { PokemonDetails } from '@/app/PokemonDetails'
 
 export default function Router() {
     return (

@@ -1,5 +1,8 @@
 import { View } from "react-native"
 import { IStatisticsItem, StatisticsItem } from "./StatisticsItem"
+import { PokemonInfoDTO } from "@/DTOs/PokemonInfoDTO"
+
+
 
 interface IStatusInfo {
     pokemonInfo: PokemonInfoDTO

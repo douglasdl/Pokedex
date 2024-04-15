@@ -1,3 +1,4 @@
+import { PokemonInfoDTO } from '@/DTOs/PokemonInfoDTO';
 import React, { useState } from 'react';
 import { View, Text, Image, Button, TextInput } from 'react-native';
 
@@ -8,39 +9,16 @@ export function Pokedex3() {
 
   const [searchPokemon, setSearchPokemon] = useState('');
 
-  const typesColors = {
-    normal: '#9099A1',
-    fighting: '#CE4069',
-    flying: '#92AADE',
-    poison: '#AB6AC8',
-    ground: '#D97746',
-    rock: '#C7B78B',
-    bug: '#90C12C',
-    ghost: '#5269AC',
-    steel: '#5A8EA1',
-    fire: '#FF9C54',
-    water: '#4D90D5',
-    grass: '#63BB5B',
-    electric: '#F3D23B',
-    psychic: '#F97176',
-    ice: '#74CEC0',
-    dragon: '#096DC4',
-    dark: '#5A5366',
-    fairy: '#EC8FE6',
-  };
-
-  console.log('COR: ', typesColors['steel']);
-
-  const [pokemonInfo, setPokemonInfo] = useState<PokemonInfo>({
+  const [pokemonInfo, setPokemonInfo] = useState<PokemonInfoDTO>({
     id: 1,
     name: 'bulbasaur',
     image: 'https://assets.pokemon.com/assets/cms2/img/pokedex/full/001.png',
     hp: 45,
     attack: 62,
-    defence: 63,
+    defense: 63,
     speed: 60,
     specialAttack: 80,
-    specialDefence: 80,
+    specialDefense: 80,
     type1: 'grass',
     type2: '',
   });
@@ -48,7 +26,6 @@ export function Pokedex3() {
   async function fetchPokemon(pokemon: string) {
     setIsLoading(true);
 
-    console.log(pokemon);
     let apiRequest = `https://pokeapi.co/api/v2/pokemon/${pokemon}`;
     const APIResponse = await fetch(apiRequest)
       .then((res) => res.json())
@@ -65,10 +42,10 @@ export function Pokedex3() {
               image: `https://assets.pokemon.com/assets/cms2/img/pokedex/full/00${result.id}.png`,
               hp: result['stats'][0]['base_stat'],
               attack: result['stats'][1]['base_stat'],
-              defence: result['stats'][2]['base_stat'],
+              defense: result['stats'][2]['base_stat'],
               speed: result['stats'][5]['base_stat'],
               specialAttack: result['stats'][3]['base_stat'],
-              specialDefence: result['stats'][4]['base_stat'],
+              specialDefense: result['stats'][4]['base_stat'],
               type1: result['types'][0]['type']['name'],
               type2: result['types'].length > 1 ? result['types'][1]['type']['name'] : '',
             });
@@ -80,10 +57,10 @@ export function Pokedex3() {
               image: `https://assets.pokemon.com/assets/cms2/img/pokedex/full/0${result.id}.png`,
               hp: result['stats'][0]['base_stat'],
               attack: result['stats'][1]['base_stat'],
-              defence: result['stats'][2]['base_stat'],
+              defense: result['stats'][2]['base_stat'],
               speed: result['stats'][5]['base_stat'],
               specialAttack: result['stats'][3]['base_stat'],
-              specialDefence: result['stats'][4]['base_stat'],
+              specialDefense: result['stats'][4]['base_stat'],
               type1: result['types'][0]['type']['name'],
               type2: result['types'].length > 1 ? result['types'][1]['type']['name'] : '',
             });
@@ -95,10 +72,10 @@ export function Pokedex3() {
               image: `https://assets.pokemon.com/assets/cms2/img/pokedex/full/${result.id}.png`,
               hp: result['stats'][0]['base_stat'],
               attack: result['stats'][1]['base_stat'],
-              defence: result['stats'][2]['base_stat'],
+              defense: result['stats'][2]['base_stat'],
               speed: result['stats'][5]['base_stat'],
               specialAttack: result['stats'][3]['base_stat'],
-              specialDefence: result['stats'][4]['base_stat'],
+              specialDefense: result['stats'][4]['base_stat'],
               type1: result['types'][0]['type']['name'],
               type2: result['types'].length > 1 ? result['types'][1]['type']['name'] : '',
             });
@@ -107,7 +84,7 @@ export function Pokedex3() {
         (error) => {
           setIsLoading(false);
           setError(error);
-          console.log(error);
+          console.error(error);
         }
       );
 
@@ -195,10 +172,10 @@ export function Pokedex3() {
           <View className={`mt-n185 items-end flex-col ml-4`}>
             <Text className={`text-black text-12 text-right mb-4`}>HP: {pokemonInfo.hp} ■■■■□□□□□□□□□□□</Text>
             <Text className={`text-black text-12 text-right mb-4`}>Ataque: {pokemonInfo.attack} ■■□□□□□□□□□□□□□</Text>
-            <Text className={`text-black text-12 text-right mb-4`}>Defesa: {pokemonInfo.defence} ■□□□□□□□□□□□□□□</Text>
+            <Text className={`text-black text-12 text-right mb-4`}>Defesa: {pokemonInfo.defense} ■□□□□□□□□□□□□□□</Text>
             <Text className={`text-black text-12 text-right mb-4`}>Velocidade: {pokemonInfo.speed} ■■■■□□□□□□□□□□□</Text>
             <Text className={`text-black text-12 text-right mb-4`}>
-              Defesa Especial: {pokemonInfo.specialDefence} ■■□□□□□□□□□□□□□
+              Defesa Especial: {pokemonInfo.specialDefense} ■■□□□□□□□□□□□□□
             </Text>
             <Text className={`text-black text-12 text-right mb-4`}>
               Ataque Especial: {pokemonInfo.specialAttack} ■□□□□□□□□□□□□□□

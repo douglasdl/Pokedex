@@ -22,21 +22,6 @@ import PokedexImg from '../../assets/Pokedex.svg';
 import BugImg from '../../assets/normal.svg';
 import { useEffect, useState } from 'react';
 
-interface PokemonInfoProps {
-    id: number;
-    name: string;
-    image: string;
-    hp: number;
-    attack: number;
-    defence: number;
-    speed: number;
-    specialAttack: number;
-    specialDefence: number;
-    type1: string;
-    type2: string;
-}
-
-
 export function Pokedex() {
 
     const [isLoading, setIsLoading] = useState(false);
@@ -68,7 +53,7 @@ export function Pokedex() {
 
     console.log('COR: ', typesColors['steel']);
 
-    const [pokemonInfo, setPokemonInfo] = useState<PokemonInfoProps>({
+    const [pokemonInfo, setPokemonInfo] = useState<PokemonInfoDTO>({
         id: 1,
         name: 'bulbasaur',
         image: 'https://assets.pokemon.com/assets/cms2/img/pokedex/full/001.png',

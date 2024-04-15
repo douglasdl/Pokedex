@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import { PokemonInfoProps, StatusInfo } from '../components/StatusInfo';
+import { StatusInfo } from '../components/StatusInfo';
 import { NavigationButton } from '@/components/NavigationButton';
 import { ConfirmButton } from '@/components/ConfirmButton';
 import { PokemonInput } from '@/components/PokemonInput';
@@ -13,7 +13,7 @@ export function Home() {
   const [pokemonDetails, setPokemonDetails] = useState<IPokemonDetails | null>(null);
   const [searchPokemon, setSearchPokemon] = useState('');
 
-  const [pokemonInfo, setPokemonInfo] = useState<PokemonInfoProps>({
+  const [pokemonInfo, setPokemonInfo] = useState<PokemonInfoDTO>({
     hp: 45,
     attack: 62,
     defense: 63,

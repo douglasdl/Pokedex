@@ -89,12 +89,14 @@ npm i @react-navigation/native
 npm i @react-navigation/native-stack
 npm i @react-navigation/bottom-tabs
 npm i axios
+npm i nativewind
 ```
 
 Install the development dependencies:
 ```sh
 npm i babel-plugin-module-resolver -D
 npm i react-native-svg-transformer -D
+npm install --save-dev tailwindcss@3.3.2
 ```
 
 Install Eslint dependencies:
@@ -114,11 +116,19 @@ npx expo install expo-updates
 npx expo-optimize
 ```
 
-Update to Expo SDK 49:
+#### Update to Expo SDK 49:
 ```sh
 npm install expo@^49.0.0
 npx expo install --fix
 ```
+
+#### Update to Expo  SDK 50:
+ ```sh
+ npm install expo@latest
+ npx expo install --fix
+#  npm install metro-react-native-babel-transformer --save-dev
+
+ ```
 
 Run the Project in Development mode:
 ```sh
