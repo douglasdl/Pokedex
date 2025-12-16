@@ -1,6 +1,28 @@
-@tailwind base;
-@tailwind components;
-@tailwind utilities;
+@import "tailwindcss";
+@plugin "@tailwindcss/forms";
+
+@theme {
+  --color-normal: #9099A1;
+  --color-fighting: #CE4069;
+  --color-flying: #92AADE;
+  --color-poison: #AB6AC8;
+  --color-ground: #D97746;
+  --color-rock: #C7B78B;
+  --color-bug: #90C12C;
+  --color-ghost: #5269AC;
+  --color-steel: #5A8EA1;
+  --color-fire: #FF9C54;
+  --color-water: #4D90D5;
+  --color-grass: #63BB5B;
+  --color-electric: #F3D23B;
+  --color-psychic: #F97176;
+  --color-ice: #74CEC0;
+  --color-dragon: #096DC4;
+  --color-dark: #5A5366;
+  --color-fairy: #EC8FE6;
+
+  --radius-4xl: 3rem;
+}
 
 body {
     -webkit-font-smoothing: antialiased;
