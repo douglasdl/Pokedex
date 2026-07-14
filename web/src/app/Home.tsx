@@ -5,7 +5,7 @@ import { ConfirmButton } from '@/components/ConfirmButton';
 import { PokemonInput } from '@/components/PokemonInput';
 import { GenerationButtons } from '@/components/GenerationButtons';
 import { api } from '@/libs/axios';
-import { FIRST_POKEMON, LAST_POKEMON, IPokemonDetails } from '@/utils/interfaces';
+import { FIRST_POKEMON, LAST_POKEMON, IPokemonDetails, PokemonInfoDTO } from '@/utils/interfaces';
 
 export function Home() {
   const [isLoading, setIsLoading] = useState(false);
