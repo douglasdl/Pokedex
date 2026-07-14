@@ -1,6 +1,15 @@
 export const FIRST_POKEMON = 1
 export const LAST_POKEMON = 1010
 
+export interface PokemonInfoDTO {
+  hp: number;
+  attack: number;
+  defense: number;
+  speed: number;
+  specialAttack: number;
+  specialDefense: number;
+}
+
 interface IAbility {
   ability: {
     name: string;

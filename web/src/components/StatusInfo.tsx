@@ -1,5 +1,6 @@
 import React from "react";
 import { IStatisticsItem, StatisticsItem } from "./StatisticsItem"
+import { PokemonInfoDTO } from "@/utils/interfaces"
 
 interface IStatusInfo {
     pokemonInfo: PokemonInfoDTO
