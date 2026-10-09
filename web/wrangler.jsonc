@@ -1,0 +1,14 @@
+{
+  "$schema": "node_modules/wrangler/config-schema.json",
+  "name": "pokedex",
+  "compatibility_date": "2026-09-25",
+  "assets": {
+    "directory": "./build",
+    // React Router (BrowserRouter): deep links like /details/pikachu must serve index.html.
+    "not_found_handling": "single-page-application"
+  },
+  "workers_dev": false,
+  "preview_urls": false,
+  // A zone route, not a custom domain: misemachi.jp hit the 100 Workers-custom-domains-per-zone limit (code 100122).
+  "routes": [{ "pattern": "pokedex.misemachi.jp/*", "zone_name": "misemachi.jp" }]
+}

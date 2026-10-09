@@ -13,14 +13,15 @@
     "build": "tsc && vite build",
     "start": "vite preview",
     "predeploy": "npm run build",
-    "deploy": "gh-pages -d build"
+    "deploy": "gh-pages -d build",
+    "deploy:cf": "npm run build && wrangler deploy"
   },
   "dependencies": {
     "@tailwindcss/forms": "^0.5.10",
-    "axios": "^1.18.1",
+    "axios": "^1.20.0",
     "react": "^19.2.3",
     "react-dom": "^19.2.3",
-    "react-router-dom": "^7.10.1"
+    "react-router-dom": "^7.18.4"
   },
   "devDependencies": {
     "@tailwindcss/postcss": "^4.1.18",
@@ -33,8 +34,8 @@
     "eslint": "^9.39.2",
     "eslint-plugin-react-hooks": "^7.0.1",
     "eslint-plugin-react-refresh": "^0.4.25",
-    "gh-pages": "^6.3.0",
-    "postcss": "^8.5.6",
+    "gh-pages": "6.1.1",
+    "postcss": "^8.5.29",
     "tailwindcss": "^4.1.18",
     "typescript": "^5.9.3",
     "vite": "^7.3.0"
