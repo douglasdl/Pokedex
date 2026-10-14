@@ -1,3 +1,4 @@
+import '@/styles/global.css';
 import { useEffect, useState } from 'react';
 import { Image, Text, View } from 'react-native';
 import { StatusInfo } from '@/components/StatusInfo';
